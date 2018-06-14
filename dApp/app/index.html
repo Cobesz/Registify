@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registify</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="./app.js"></script>
+</head>
+<body>
+<h1>Registify</h1>
+<h2>Pre-registration on the Blockchain!</h2>
+<h3>You have made <span class="black"><span id="registrations"></span> registrations</span></h3>
+
+<br>
+<h1>Create Registration</h1>
+<br><label for="title">Title:</label><input type="text" id="title"
+                                            placeholder="e.g., Incredible new ways for playing games"></input>
+<br><label for="author">Author:</label><input type="text" id="author" placeholder="e.g., Sjaak de Bouvier"></input>
+<br><label for="file">File:</label><input type="file" id="file"></input>
+<br><br>
+<button id="send" onclick="App.createRegistration()">Create Registration</button>
+<br><br>
+<span id="status"></span>
+<br>
+<span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+</body>
+</html>

@@ -1,5 +1,5 @@
-var Adoption = artifacts.require("Adoption");
+var Registrations = artifacts.require("./Registrations.sol");
 
 module.exports = function(deployer) {
-    deployer.deploy(Adoption);
+  deployer.deploy(Registrations);
 };

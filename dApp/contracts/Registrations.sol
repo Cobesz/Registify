@@ -19,14 +19,15 @@ contract Registrations is Ownable {
     Registration[] public registrations;
 
     // for file hashing
-    uint fingerprint = uint(keccak256("Solidity is wel apart, maar werkt in principe wel goed."));
+    string fingerprint = "Genesis";
 
     mapping(uint => address) public registrationToOwner;
     mapping(address => uint) ownerRegistrationCount;
 
     constructor() {
         ownerRegistrationCount[address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5)] = 0;
-        createRegistration(address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5), "Genesis", "Cas", fingerprint);
+        createRegistration(address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5), "Genesis", "Cas", uint(keccak256(fingerprint)));
+
     }
 
     function getRegistrations(address addr) public view returns (uint) {
@@ -34,22 +35,35 @@ contract Registrations is Ownable {
     }
 
 
-    function createRegistration(address account, string title, string author, uint fingerprint) internal {
+    function createRegistration(address account, string title, string author, uint fingerprint) internal returns (uint){
 
+        Registration memory registration = Registration({
+            title : title,
+            author : author,
+            creationTime : uint32(now),
+            fingerprint : fingerprint
+            });
         // first item in array is what we added, so -1 to select it.
-        uint id = registrations.push(Registration({title : title, author : author, creationTime : uint32(now), fingerprint : fingerprint})) - 1;
+        uint id = registrations.push(registration) - 1;
+        //        uint id = registrations.push(Registration({title : title, author : author, creationTime : uint32(now), fingerprint : fingerprint})) - 1;
         registrationToOwner[id] = account;
         ownerRegistrationCount[account]++;
         NewRegistration(id, title, author, now);
+
+        return id;
     }
 
-    function register(address account, string title, string author, uint256 fingerprintHex) external returns (uint) {
-//        if (registrationToOwner[id] != uint(0)) {
-//            Error(401);
-//            return;
-//        }
+    function register(address account, string title, string author, string fingerprint) external returns (uint){
+        //        if (registrationToOwner[id] != uint(0)) {
+        //            Error(401);
+        //            return;
+        //        }
 
-        createRegistration(account, title, author, uint(fingerprintHex));
+        uint id = createRegistration(msg.sender, title, author, uint(fingerprint));
+
+//        registrationToOwner[account] = msg.sender;
+//        uint id = _createIP(_name, _filename, _fingerprint, msg.sender);
+        return id;
     }
 
 

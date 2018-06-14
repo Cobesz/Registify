@@ -5,7 +5,7 @@ import "../stylesheets/app.css";
 // Import libraries we need.
 import {default as Web3} from 'web3';
 import {default as contract} from 'truffle-contract'
-import {default as ejs} from 'ethereumjs-util'
+import {BigNumber} from 'bignumber'
 import {default as CryptoJS} from 'crypto-js'
 
 // Import our contract artifacts and turn them into usable abstractions.
@@ -109,7 +109,6 @@ window.App = {
 
         fileReader.onload = (e) => {
             fingerprint = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(fileReader.result)).toString();
-            console.log(fingerprint);
 
             Registrations.deployed()
                 .then(function (instance) {
@@ -120,70 +119,34 @@ window.App = {
 
                     return instance.register(account, title, author, fingerprint, {from: account});
                 })
-                .then(function (value) {
-                    console.log(value);
-                    console.log("Cas, je bent een fucking baas!");
+            .then(function (value) {
+                console.log(value);
+                console.log("Cas, je bent een fucking baas!");
 
 
-                    //call getRegistrations to update the count in HTML.
-                    Registrations.deployed().then(function (instance) {
-                        return instance.getRegistrations.call(account, {from: account});
-                    }).then(function (value) {
-                        console.log("hij komt hier");
-                        var registration_element = document.getElementById("registrations");
+                //call getRegistrations to update the count in HTML.
+                Registrations.deployed().then(function (instance) {
+                    return instance.getRegistrations.call(account, {from: account});
+                }).then(function (value) {
+                    console.log("hij komt hier");
+                    var registration_element = document.getElementById("registrations");
 
-                        setTimeout(1000, function () {
-                            registration_element.innerHTML = value;
-                        });
-
-                    }).catch(function (e) {
-                        console.log(e);
-                        self.setStatus("Error getting balance; see log.");
+                    setTimeout(1000, function () {
+                        registration_element.innerHTML = value;
                     });
 
                 }).catch(function (e) {
-                console.log(e);
-                console.log('Uh Oh');
-                self.setStatus("Uh oh");
+                    console.log(e);
+                    self.setStatus("Error getting balance; see log.");
+                });
+
+            }).catch(function (e) {
+            console.log(e);
+            console.log('Uh Oh');
+            self.setStatus("Uh oh");
             });
         };
         fileReader.readAsArrayBuffer(file);
-        // filereader.onload = (e) => {
-        //     let result = e.target.result;
-        //
-        //     result.slice = function (start, end) {
-        //         var that = new Uint8Array(this);
-        //         if (end == undefined) end = that.length;
-        //         var result = new ArrayBuffer(end - start);
-        //         var resultArray = new Uint8Array(result);
-        //         for (var i = 0; i < resultArray.length; i++)
-        //             resultArray[i] = that[i + start];
-        //         return result;
-        //     };
-        //
-        //     let byteArray = new Uint8Array(result);
-        //
-        //     // to transform to a Hexidecimal string
-        //     function toHexString(byteArray) {
-        //         return Array.prototype.map.call(byteArray, function (byte) {
-        //             return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-        //         }).join('');
-        //     }
-        //
-        //     //and to convert it back.
-        //     function toByteArray(hexString) {
-        //         var result = [];
-        //         while (hexString.length >= 2) {
-        //             result.push(parseInt(hexString.substring(0, 2), 16));
-        //             hexString = hexString.substring(2, hexString.length);
-        //         }
-        //         return result;
-        //     }
-        //
-        //     let hexString = toHexString(byteArray);
-
-        // byteArray = toByteArray(hexString);
-        // };
     }
 };
 

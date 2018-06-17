@@ -1,52 +1,140 @@
 body {
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: 10%;
-  font-family: "Open Sans", sans-serif;
+    /*margin-left: 25%;*/
+    /*margin-right: 25%;*/
+    margin-top: 5em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#registify {
+    clear: both;
+    color: #16324F;
+    font-weight: 800;
+}
+
+.createRegistration {
+    color: #16324F;
+    font-weight: bold;
+}
+
+.labels {
+    color: #909090;
+}
+
+.inputfields {
+    border: 2px solid #d5d5d5;
+    width: 500px;
+    padding: 15px;
+}
+
+.inputfields::placeholder {
+    opacity: 0.5;
+    font-weight: bold;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    border: 2px solid #F3A32F;
+    width: max-content;
+    padding: 8px 15px;
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #909090;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #F3A32F;
+    color: white;
+    transition: 0.1s;
 }
 
 label {
-  display: inline-block;
-  width: 100px;
+    display: inline-block;
+    width: 100px;
 }
 
-input {
-  width: 500px;
-  padding: 5px;
-  font-size: 16px;
+.span {
+    color: #909090;
+    font-weight: 800;
 }
 
-button {
-  font-size: 16px;
-  padding: 5px;
+.submitButton {
+    background-color: #16324F;
+    width: max-content;
+    padding: 8px 15px;
+    font-size: 1.25em;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+    opacity: 0.5;
 }
 
-h1, h2 {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: 0px;
-  margin-bottom: 10px;
+.submitButton:hover {
+
+    opacity: 1;
+    transition: 0.1s;
 }
 
-h2 {
-  color: #AAA;
-  font-size: 32px;
+.line {
+    border-left: 1px solid #d5d5d5;
+    height: 245px;
+    /*position: absolute;*/
+    left: 20%;
+    /*margin-left: -3px;*/
+    /*top: 0;*/
 }
 
-h3 {
-  font-weight: normal;
-  color: #AAA;
-  font-size: 24px;
-}
-
-.black {
-  color: black;
+h2, h3 {
+    color: #909090;
+    font-weight: normal;
 }
 
 #balance {
-  color: black;
+    color: black;
 }
 
 .hint {
-  color: #666;
+    color: #666;
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .line {
+        left: 23%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .line {
+        display: none;
+    }
+    .horizontal-line {
+        width: 100%;
+        display: block !important;
+        border: 0.5px solid #d5d5d5;
+        margin: 20px 15px;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    .line {
+        display: none;
+    }
+    .horizontal-line {
+        width: 85%;
+        display: block !important;
+        border: 0.5px solid #d5d5d5;
+        margin: 20px 15px;
+    }
 }

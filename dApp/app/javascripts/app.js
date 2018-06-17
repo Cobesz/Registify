@@ -5,7 +5,7 @@ import "../stylesheets/app.css";
 // Import libraries we need.
 import {default as Web3} from 'web3';
 import {default as contract} from 'truffle-contract'
-import {BigNumber} from 'bignumber'
+import {default as BigNumber} from 'bignumber.js'
 import {default as CryptoJS} from 'crypto-js'
 
 // Import our contract artifacts and turn them into usable abstractions.
@@ -44,7 +44,9 @@ window.App = {
             accounts = accs;
             account = accounts[0];
 
-            self.refreshRegistrations();
+            setInterval(function () {
+                self.refreshRegistrations();
+            }, 5000);
         });
     },
 
@@ -62,7 +64,9 @@ window.App = {
             return regis.getRegistrations.call(account, {from: account});
         }).then(function (value) {
             var registration_element = document.getElementById("registrations");
+
             registration_element.innerHTML = value;
+
             // registrations_element.innerHTML = "0";
         }).catch(function (e) {
             console.log(e);
@@ -72,8 +76,6 @@ window.App = {
         Registrations.deployed().then(function (instance) {
             return instance.getRegistrationCount.call(account, {from: account});
         }).then(function (value) {
-            console.log(value.toString(16));
-
             //count is one, there is always a genesis block.
             let count = 1;
             for (let i = 0; i < value; i++) {
@@ -86,12 +88,6 @@ window.App = {
                     let author = value[2].toString();
                     let creationTime = value[3].toString();
                     let fingerprint = value[4].toString(16);
-                    console.log(id);
-                    console.log(title);
-                    console.log(author);
-                    console.log(creationTime);
-                    console.log(fingerprint);
-                    console.log('found ' + count);
                     count++;
                 })
             }
@@ -108,7 +104,8 @@ window.App = {
         let fingerprint;
 
         fileReader.onload = (e) => {
-            fingerprint = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(fileReader.result)).toString();
+            fingerprint = new BigNumber(CryptoJS.SHA256(CryptoJS.lib.WordArray.create(fileReader.result)).toString(), 16);
+
 
             Registrations.deployed()
                 .then(function (instance) {
@@ -117,33 +114,77 @@ window.App = {
                     console.log(author);
                     console.log(fingerprint);
 
-                    return instance.register(account, title, author, fingerprint, {from: account});
+                    return instance.register(account, title, author, fingerprint.toString(10), {from: account});
                 })
-            .then(function (value) {
-                console.log(value);
-                console.log("Cas, je bent een fucking baas!");
+                .then(function (value) {
+                    console.log(value);
+                    console.log("Cas, je bent een fucking baas!");
 
 
-                //call getRegistrations to update the count in HTML.
-                Registrations.deployed().then(function (instance) {
-                    return instance.getRegistrations.call(account, {from: account});
-                }).then(function (value) {
-                    console.log("hij komt hier");
-                    var registration_element = document.getElementById("registrations");
+                    //call getRegistrations to update the count in HTML.
+                    Registrations.deployed().then(function (instance) {
+                        return instance.getRegistrations.call(account, {from: account});
+                    }).then(function (value) {
+                        console.log("hij komt hier");
+                        var registration_element = document.getElementById("registrations");
 
-                    setTimeout(1000, function () {
-                        registration_element.innerHTML = value;
+                        console.log(value.toString());
+
+                    }).catch(function (e) {
+                        console.log(e);
+                        self.setStatus("Error getting balance; see log.");
                     });
 
                 }).catch(function (e) {
-                    console.log(e);
-                    self.setStatus("Error getting balance; see log.");
-                });
+                console.log(e);
+                console.log('Uh Oh');
+                self.setStatus("Uh oh");
+            });
 
-            }).catch(function (e) {
-            console.log(e);
-            console.log('Uh Oh');
-            self.setStatus("Uh oh");
+        };
+        fileReader.readAsArrayBuffer(file);
+    },
+
+    viewRegistration: function () {
+
+        let file = document.getElementById("viewFile").files.item(0);
+
+        let fileReader = new FileReader();
+
+        fileReader.onload = (e) => {
+            let fingerprintCheck = new BigNumber(CryptoJS.SHA256(CryptoJS.lib.WordArray.create(fileReader.result)).toString(), 16).toString(16);
+            // console.log(fingerprintCheck.toString(10));
+
+            Registrations.deployed().then(function (instance) {
+                return instance.getRegistrationCount.call(account, {from: account});
+            }).then(function (value) {
+                // console.log(value.toString(16));
+
+                //count is one, there is always a genesis block.
+                let count = 1;
+                for (let i = 0; i < value; i++) {
+
+                    Registrations.deployed().then(function (instance) {
+                        return instance.viewRegistration.call(i, account, {from: account});
+                    }).then(function (value) {
+                        let id = value[0].toString();
+                        let title = value[1].toString();
+                        let author = value[2].toString();
+                        let creationTime = value[3].toString();
+                        let fingerprint = value[4].toString(16);
+
+                        console.log(fingerprintCheck.toString(10));
+                        if (fingerprintCheck.toString(10) === fingerprint) {
+                            console.log('hoi');
+                            console.log('de ID is: ' + id);
+                            console.log('de titel is: ' + title);
+                            console.log('de auteur is: ' + author);
+                            console.log('de timestamp is: ' + creationTime);
+                            console.log('de hash van het bestand is: ' + fingerprint);
+                        }
+                        count++;
+                    })
+                }
             });
         };
         fileReader.readAsArrayBuffer(file);
@@ -161,6 +202,18 @@ window.addEventListener('load', function () {
         // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
         window.web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:9545"));
     }
+
+    $("#file").change(function () {
+        console.log(this);
+        var filename = this.files[0].name;
+        $("#file-upload-button").html(filename);
+    });
+
+    $("#viewFile").change(function () {
+        console.log(this);
+        var filename = this.files[0].name;
+        $("#check-file-upload-button").html(filename);
+    });
 
     App.start();
 });

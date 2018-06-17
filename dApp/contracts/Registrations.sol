@@ -19,14 +19,14 @@ contract Registrations is Ownable {
     Registration[] public registrations;
 
     // for file hashing
-    string fingerprint = "Genesis";
+    uint fingerprint = uint(keccak256("Genesis"));
 
     mapping(uint => address) public registrationToOwner;
     mapping(address => uint) ownerRegistrationCount;
 
     constructor() {
         ownerRegistrationCount[address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5)] = 0;
-        createRegistration(address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5), "Genesis", "Cas", uint(keccak256(fingerprint)));
+        createRegistration(address(0xA7b2ACE1f4cd34AF34A29151Ff1a7e74e5D39Eb5), "Genesis", "Cas", fingerprint);
 
     }
 
@@ -53,16 +53,8 @@ contract Registrations is Ownable {
         return id;
     }
 
-    function register(address account, string title, string author, string fingerprint) external returns (uint){
-        //        if (registrationToOwner[id] != uint(0)) {
-        //            Error(401);
-        //            return;
-        //        }
-
+    function register(address account, string title, string author, uint fingerprint) external returns (uint){
         uint id = createRegistration(msg.sender, title, author, uint(fingerprint));
-
-//        registrationToOwner[account] = msg.sender;
-//        uint id = _createIP(_name, _filename, _fingerprint, msg.sender);
         return id;
     }
 
@@ -86,10 +78,10 @@ contract Registrations is Ownable {
                 }
                 count++;
             }
-            if (!found) {
-                id = 0;
-                return;
-            }
+        }
+        if (!found) {
+            id = 0;
+            return;
         }
     }
 

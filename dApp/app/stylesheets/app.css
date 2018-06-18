@@ -95,17 +95,121 @@ label {
     /*top: 0;*/
 }
 
-h2, h3 {
-    color: #909090;
-    font-weight: normal;
-}
-
 #balance {
     color: black;
 }
 
 .hint {
     color: #666;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal {
+    padding: 50px
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #16324F;
+    margin: 12.5vh auto; /* 15% from the top and centered */
+    /*border: 1px solid #888;*/
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content h2 {
+    font-weight: bold;
+}
+.modal-content h3 {
+    font-weight: bold;
+}
+
+.modal-content span {
+    font-weight: normal;
+}
+.modalText {
+    color: #FFF;
+}
+
+.wrapBox {
+    padding: 2vw 6vw;
+}
+
+.yellowBox {
+    display: block;
+    height: 50px;
+    background-color: #F3A32F;
+}
+
+/* The Close Button */
+#createClose {
+    color: #FFF;
+    padding: 1vw 2vw;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    opacity: 1;
+}
+
+#createClose:hover,
+#createClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*** Check Modal ***/
+
+/* The CheckModal Close Button */
+#checkClose {
+    color: #16324F;
+    padding: 1vw 2vw;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    opacity: 1;
+}
+
+#checkClose:hover,
+#checkClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.checkModal {
+    background-color: #FFF;
+}
+
+#registrationComplete {
+    color: #16324F;
+}
+
+.checkModalText{
+    font-weight: bold;
+}
+
+.checkModalText span {
+    color: #909090;
+    font-weight: normal;
+}
+
+
+h2, h3 {
+    color: #909090;
+    font-weight: normal;
 }
 
 
@@ -135,3 +239,5 @@ h2, h3 {
         width: 85%;
     }
 }
+
+

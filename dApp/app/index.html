@@ -78,6 +78,42 @@
             <span id="status"></span>
             <br>
             <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+
+            <!-- The Create Modal -->
+            <div id="createModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span id="createClose">&times;</span>
+                    <div class="wrapBox">
+                        <h2 class="modalText">Registration Complete</h2>
+                        <br>
+                        <h3 class="modalText">Title: <span class="modalText" id="createTitle"></span></h3>
+                        <h3 class="modalText">Author: <span class="modalText" id="createAuthor"></span></h3>
+                        <h3 class="modalText">FileHash: <span class="modalText" id="createFilehash"></span></h3>
+                        <h3 class="modalText">txHash: <span class="modalText" id="createTXHash"></span></h3>
+                    </div>
+                    <span class="yellowBox"></span>
+                </div>
+            </div>
+
+            <!-- The Create Modal -->
+            <div id="checkModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content checkModal">
+                    <span id="checkClose">&times;</span>
+                    <div class="wrapBox">
+                        <h2 id="registrationComplete" class="checkModalText">Found registration</h2>
+                        <br>
+                        <h3 class="checkModalText">Title: <span class="modalText" id="checkTitle"></span></h3>
+                        <h3 class="checkModalText">Author: <span class="modalText" id="checkAuthor"></span></h3>
+                        <h3 class="checkModalText">FileHash: <span class="modalText" id="checkFilehash"></span></h3>
+                        <h3 class="checkModalText">Timestamp: <span class="modalText" id="checkTimeStamp"></span></h3>
+                    </div>
+                    <span class="yellowBox"></span>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>

@@ -109,31 +109,50 @@ window.App = {
 
             Registrations.deployed()
                 .then(function (instance) {
-                    console.log(account);
-                    console.log(title);
-                    console.log(author);
-                    console.log(fingerprint);
 
                     return instance.register(account, title, author, fingerprint.toString(10), {from: account});
                 })
                 .then(function (value) {
-                    console.log(value);
-                    console.log("Cas, je bent een fucking baas!");
-
-
                     //call getRegistrations to update the count in HTML.
                     Registrations.deployed().then(function (instance) {
                         return instance.getRegistrations.call(account, {from: account});
                     }).then(function (value) {
-                        console.log("hij komt hier");
                         var registration_element = document.getElementById("registrations");
-
-                        console.log(value.toString());
 
                     }).catch(function (e) {
                         console.log(e);
                         self.setStatus("Error getting balance; see log.");
                     });
+
+
+                    //modal
+                    // Get the modal
+                    var modal = document.getElementById('createModal');
+
+                    // Get the button that opens the modal
+                    // var btn = document.getElementById("createRegistrationButton");
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementById("createClose");
+
+                    // When registration completes, open the modal
+                    modal.style.display = "block";
+                    $("#createTitle").html(title);
+                    $("#createAuthor").html(author);
+                    $("#createFilehash").html(fingerprint.toString(16));
+                    $("#createTXHash").html(value.tx);
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    };
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    };
 
                 }).catch(function (e) {
                 console.log(e);
@@ -181,6 +200,38 @@ window.App = {
                             console.log('de auteur is: ' + author);
                             console.log('de timestamp is: ' + creationTime);
                             console.log('de hash van het bestand is: ' + fingerprint);
+
+                            let date = new Date(creationTime*1000)
+                            //modal
+                            // Get the modal
+                            var modal = document.getElementById('checkModal');
+
+                            // Get the button that opens the modal
+                            // var btn = document.getElementById("createRegistrationButton");
+
+                            // Get the <span> element that closes the modal
+                            var span = document.getElementById("checkClose");
+
+                            // When registration completes, open the modal
+                            modal.style.display = "block";
+                            $("#checkTitle").html(title);
+                            $("#checkAuthor").html(author);
+                            $("#checkFilehash").html(fingerprint.toString(16));
+                            $("#checkTimeStamp").html(date);
+
+                            // When the user clicks on <span> (x), close the modal
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            };
+
+                            // When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function (event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            };
+
+
                         }
                         count++;
                     })

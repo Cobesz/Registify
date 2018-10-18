@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registify</title>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="./app.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 id="registify">Registify</h1>
+            <h2>Pre-registration on the Blockchain!</h2>
+            <h3>You have made <span class="span"><span id="registrations"></span> registrations</span></h3>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <h2 class="createRegistration">Create Registration</h2>
+            <label class="labels" for="title">Title:</label>
+            <input class="inputfields" type="text" id="title"
+                   placeholder="e.g., Incredible new ways for playing games"></input>
+            <br/>
+            <br/>
+            <label class="labels" for="author">Author:</label>
+            <input class="inputfields" type="text" id="author"
+                   placeholder="e.g., Sjaak de Bouvier"></input>
+            <br>
+            <br>
+            <!--<label class="labels" for="file">File:</label>-->
+            <br>
+            <input type="file" name="file" id="file" class="inputfile file-upload-button"></input>
+            <label id="file-upload-button" for="file">Choose file</label>
+            <br>
+            <br>
+            <button class="submitButton" id="createRegistrationButton" onclick="App.createRegistration()">Create
+                Registration
+            </button>
+
+        </div>
+        <div class="col-md-3 line">
+        </div>
+        <div class="col-md-3 horizontal-line" style="display: none">
+            <div class="col-md-3 line"></div>
+        </div>
+        <div class="col-md-4">
+            <h2 class="createRegistration">Check Registration</h2>
+            <!--<br><label for="viewFile">File:</label><input type="file" id="viewFile"></input>-->
+            <!--<br><br>-->
+            <!--<button onclick="App.viewRegistration()">Check Registration</button>-->
+            <br>
+            <input type="file" name="viewFile" id="viewFile" class="inputfile file-upload-button"></input>
+            <label id="check-file-upload-button" for="viewFile">Choose file</label>
+            <br>
+            <br>
+            <button class="submitButton" id="checkRegistrationButton" onclick="App.viewRegistration()">Check
+                Registration
+            </button>
+            <br>
+            <span id="status"></span>
+            <br>
+            <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+
+            <!-- The Create Modal -->
+            <div id="createModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span id="createClose">&times;</span>
+                    <div class="wrapBox">
+                        <h2 class="modalText">Registration Complete</h2>
+                        <br>
+                        <h3 class="modalText">Title: <span class="modalText" id="createTitle"></span></h3>
+                        <h3 class="modalText">Author: <span class="modalText" id="createAuthor"></span></h3>
+                        <h3 class="modalText">FileHash: <span class="modalText" id="createFilehash"></span></h3>
+                        <h3 class="modalText">txHash: <span class="modalText" id="createTXHash"></span></h3>
+                    </div>
+                    <span class="yellowBox"></span>
+                </div>
+            </div>
+
+            <!-- The Create Modal -->
+            <div id="checkModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content checkModal">
+                    <span id="checkClose">&times;</span>
+                    <div class="wrapBox">
+                        <h2 id="registrationComplete" class="checkModalText">Found registration</h2>
+                        <br>
+                        <h3 class="checkModalText">Title: <span class="modalText" id="checkTitle"></span></h3>
+                        <h3 class="checkModalText">Author: <span class="modalText" id="checkAuthor"></span></h3>
+                        <h3 class="checkModalText">FileHash: <span class="modalText" id="checkFilehash"></span></h3>
+                        <h3 class="checkModalText">Timestamp: <span class="modalText" id="checkTimeStamp"></span></h3>
+                    </div>
+                    <span class="yellowBox"></span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
